@@ -71,6 +71,7 @@ function ChooseOperation(selectedOperation) {
     DisplayNumbers();
     return;
   }
+  
   operation = selectedOperation;
   previousOperand = currentOperand;
   acButton.innerHTML = "AC";
