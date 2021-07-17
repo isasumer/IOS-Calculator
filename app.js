@@ -39,6 +39,7 @@ const numbersArray = [
 let previousOperand = "";
 let currentOperand = "";
 let operation = undefined;
+let temporaryOperand = "";
 
 // Functions
 
@@ -54,6 +55,7 @@ function DisplayNumbers() {
 function AppendNumber(number) {
   if (number === "." && currentOperand.includes(".")) return;
   if (number === 0 && currentOperand === "0") return;
+  if (currentOperand.length > 7) return;
 
   currentOperand = currentOperand.toString() + number.toString();
 
@@ -61,6 +63,14 @@ function AppendNumber(number) {
 }
 
 function ChooseOperation(selectedOperation) {
+  if (temporaryOperand) {
+    previousOperand = temporaryOperand.toString();
+    currentOperand = "";
+    temporaryOperand = "";
+    operation = selectedOperation;
+    DisplayNumbers();
+    return;
+  }
   operation = selectedOperation;
   previousOperand = currentOperand;
   acButton.innerHTML = "AC";
@@ -73,6 +83,9 @@ function Compute() {
   let computation;
   const previous = parseFloat(previousOperand);
   const current = parseFloat(currentOperand);
+
+  if (!operation) return;
+  if (isNaN(previous) || isNaN(current)) return;
 
   switch (operation) {
     case "+":
@@ -95,11 +108,14 @@ function Compute() {
       break;
   }
 
+  if (isNaN(computation)) return;
+
   currentOperand = computation;
   previousOperand = "";
   operation = undefined;
-
   DisplayNumbers();
+  temporaryOperand = currentOperand;
+  currentOperand = "";
 }
 
 function AllClear() {
@@ -168,6 +184,7 @@ for (let i = 0; i < numbersArray.length; i++) {
 
   number.addEventListener("click", () => {
     AppendNumber(i);
+    temporaryOperand = "";
   });
 }
 
