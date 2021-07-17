@@ -37,6 +37,12 @@ body {
   border: 1px solid red;
 }
 
+.previous-display {
+  opacity: 0.5;
+  font-size: 50px;
+  overflow: hidden;
+}
+
 .buttons-container {
   display: grid;
   grid-gap: 10px;
@@ -65,4 +71,21 @@ body {
 
 .operator {
   background: #f1a33c;
+}
+
+.button.number-0 {
+  grid-column: 1 / span 2;
+  justify-content: flex-start;
+  padding-left: 43px;
+  width: 215px;
+  border-radius: 55px;
+}
+
+.button:active,
+.button:focus {
+  filter: brightness(120%)
+}
+
+.button:hover {
+  opacity: 0.5;
 }
