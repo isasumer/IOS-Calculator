@@ -52,14 +52,18 @@ function DisplayNumbers() {
 }
 
 function AppendNumber(number) {
-  console.log("NUMBER: ", number);
+  if (number === "." && currentOperand.includes(".")) return;
+  if (number === 0 && currentOperand === "0") return;
+
   currentOperand = currentOperand.toString() + number.toString();
+
   DisplayNumbers();
 }
 
 function ChooseOperation(selectedOperation) {
   operation = selectedOperation;
   previousOperand = currentOperand;
+  acButton.innerHTML = "AC";
   currentOperand = "";
 
   DisplayNumbers();
@@ -99,10 +103,25 @@ function Compute() {
 }
 
 function AllClear() {
-  previousOperand = "";
-  currentOperand = "";
-  operation = undefined;
+  if (!previousOperand) {
+    currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+  } else {
+    previousOperand = "";
+    currentOperand = "";
+    operation = undefined;
+    acButton.innerHTML = "C";
+  }
 
+  DisplayNumbers();
+}
+
+function PlusMinus() {
+  currentOperand = currentOperand * -1;
+  DisplayNumbers();
+}
+
+function Percent() {
+  currentOperand = currentOperand / 100;
   DisplayNumbers();
 }
 
@@ -135,11 +154,11 @@ acButton.addEventListener("click", () => {
 });
 
 pmButton.addEventListener("click", () => {
-  console.log("pmButton");
+  PlusMinus();
 });
 
 percentButton.addEventListener("click", () => {
-  console.log("percentButton");
+  Percent();
 });
 
 // Add event listener to number buttons
@@ -151,3 +170,7 @@ for (let i = 0; i < numbersArray.length; i++) {
     AppendNumber(i);
   });
 }
+
+decimalButton.addEventListener("click", () => {
+  AppendNumber(".");
+});
