@@ -43,7 +43,11 @@ let operation = undefined;
 // Functions
 
 function DisplayNumbers() {
-  previousElement.innerHTML = previousOperand;
+  if (operation) {
+    previousElement.innerHTML = `${previousOperand} ${operation}`;
+  } else {
+    previousElement.innerHTML = previousOperand;
+  }
   currentElement.innerHTML = currentOperand;
 }
 
@@ -70,12 +74,12 @@ function Compute() {
     case "+":
       computation = previous + current;
       break;
-      
+
     case "-":
       computation = previous - current;
       break;
 
-    case "/":
+    case "÷":
       computation = previous / current;
       break;
 
@@ -89,6 +93,15 @@ function Compute() {
 
   currentOperand = computation;
   previousOperand = "";
+  operation = undefined;
+
+  DisplayNumbers();
+}
+
+function AllClear() {
+  previousOperand = "";
+  currentOperand = "";
+  operation = undefined;
 
   DisplayNumbers();
 }
@@ -108,7 +121,7 @@ multiplicationButton.addEventListener("click", () => {
 });
 
 divisionButton.addEventListener("click", () => {
-  ChooseOperation("/");
+  ChooseOperation("÷");
 });
 
 equalsButton.addEventListener("click", () => {
@@ -116,6 +129,18 @@ equalsButton.addEventListener("click", () => {
 });
 
 // Add event listener to top buttons
+
+acButton.addEventListener("click", () => {
+  AllClear();
+});
+
+pmButton.addEventListener("click", () => {
+  console.log("pmButton");
+});
+
+percentButton.addEventListener("click", () => {
+  console.log("percentButton");
+});
 
 // Add event listener to number buttons
 
