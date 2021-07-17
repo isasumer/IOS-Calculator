@@ -36,7 +36,21 @@ const numbersArray = [
     number9
 ]
 
+let previousOperand = "";
+let currentOperand = "";
+
 // Functions
+
+function DisplayNumbers() {
+    previousElement.innerHTML = previousOperand;
+    currentElement.innerHTML = currentOperand;
+}
+
+function AppendNumber(number) {
+    console.log("NUMBER: ", number);
+    currentOperand = currentOperand.toString() + number.toString();
+    DisplayNumbers();
+}
 
 // Add event listener to operator buttons
 
@@ -48,7 +62,7 @@ for (let i=0; i< numbersArray.length ; i++) {
     const number = numbersArray[i];
 
     number.addEventListener("click", () => {
-        currentElement.innerHTML = i;
-        console.log("NUMBER: ", i)
+        
+        AppendNumber(i)
     })
 }
