@@ -27,7 +27,10 @@ const number9 = document.querySelector (".number-9")
 const numbersArray= [number0, number1, number2, number3, 
   number4, number5, number6, number7, number8, number9]
 //functions
-
+function DisplayNumbers() {
+  previousElement.innerHTML = "";
+  currentElement.innerHTML = "";
+}
 //add event listener to operator buttons
 
 //add event listener to top buttons
@@ -37,6 +40,7 @@ for (let i=0; i<numbersArray.length; i++) {
   const number = numbersArray[i];
 
   number.AddEventListener("click", () => {
+    currentElement.innerHTML = i;
     console.log("Number: ", i)
   })
 }
