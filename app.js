@@ -35,7 +35,18 @@ const numbersArray = [
   number9,
 ];
 
+let previousOperand = "";
+let currentOperand = "";
+let operation = undefined;
+let temporaryOperand = "";
 
-
-
+function DisplayNumbers(){
+  if (operation) {
+    previousElement.innerHTML = "${previousOperand} ${operation}";
+  }
+  else{
+    previousElement.innerHTML=previousOperand;
+  }
+  currentOperand.innerHTML=currentOperand
+}
 
