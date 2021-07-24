@@ -7,7 +7,7 @@ const percentButton = document.querySelector(".percent");
 
 const additionButton = document.querySelector(".addition");
 const subtractionButton = document.querySelector(".subtraction");
-const multiplyButton = document.querySelector(".multiply");
+const multiplyButton = document.querySelector(".multiplication");
 const divisionButton = document.querySelector(".division");
 const equalButton = document.querySelector(".equals");
 
@@ -40,13 +40,151 @@ let currentOperand = "";
 let operation = undefined;
 let temporaryOperand = "";
 
-function DisplayNumbers(){
+function DisplayNumbers() {
   if (operation) {
-    previousElement.innerHTML = "${previousOperand} ${operation}";
+    previousElement.innerHTML = `${previousOperand} ${operation}`;
   }
   else{
     previousElement.innerHTML=previousOperand;
   }
-  currentOperand.innerHTML=currentOperand
+  currentElement.innerHTML=currentOperand
 }
 
+function AppendNumber(number) {
+  if (number==="." && currentOperand.includes(".")) return;
+  if (number === 0 && currentOperand === "0") return;
+  if (currentOperand.length > 7) return;
+
+  currentOperand = currentOperand.toString() + number.toString();
+
+  DisplayNumbers();
+}
+
+function ChooseOperation(selectedOperation) {
+  if (temporaryOperand) {
+    previousOperand = temporaryOperand.toString();
+    currentOperand = "";
+    temporaryOperand= "";
+    operation = selectedOperation;
+    DisplayNumbers();
+    return;
+  }
+
+  operation = selectedOperation;
+  previousOperand = currentOperand;
+  acButton.innerHTML = "AC";
+  currentOperand ="";
+
+  DisplayNumbers ();
+}
+
+function Compute () {
+  let computation;
+  const previous= parseFloat(previousOperand);
+  const current = parseFloat(currentOperand);
+
+  if (!operation) return;
+  if (isNaN(previous) || isNaN(current)) return;
+
+  switch (operation){
+    
+    case "+":
+    computation = previous + current;
+    break;
+
+    case "-":
+    computation = previous - current;
+    break;
+
+    case "/":
+    computation = previous / current;
+    break;
+
+    case "*":
+    computation = previous * current;
+    break;
+
+    default:
+      break;
+  }
+
+  if (isNaN(computation)) return;
+
+  currentOperand = computation;
+  previousOperand = "";
+  operation = undefined;
+  DisplayNumbers();
+  temporaryOperand = currentOperand;
+  currentOperand = "";
+}
+
+function Allclear () {
+  if (!previousOperand){
+    currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+  }else {
+    previousOperand = "";
+    currentOperand = "";
+    operation= undefined;
+    acButton.innerHTML = "C";
+  }
+  DisplayNumbers();
+}
+
+function PlusMinus () {
+  currentOperand = currentOperand * -1;
+  DisplayNumbers();
+}
+
+function Percent () {
+  currentOperand = currentOperand / 100;
+  DisplayNumbers();
+}
+
+//Add event listener to operator Buttons
+
+additionButton.addEventListener ("click", () => {
+  ChooseOperation ("+");
+});
+
+subtractionButton.addEventListener ("click", () => {
+  ChooseOperation ("-");
+});
+
+multiplicationButton.addEventListener ("click", () => {
+  ChooseOperation ("*");
+});
+
+divisionButton.addEventListener ("click", () => {
+  ChooseOperation ("/");
+});
+
+equalButton.addEventListener ("click", () => {
+  Compute ();
+});
+
+acButton.addEventListener ("click", () => {
+  Allclear ();
+});
+
+pmButton.addEventListener ("click", () => {
+  PlusMinus ();
+});
+
+percentButton.addEventListener ("click", () => {
+  Percent();
+})
+
+//Add Event Listener to Number Buttons 
+
+for (let i=0; i<numbersArray.length; i++) {
+  const number = numbersArray [i];
+
+  number.addEventListener("click", () => {
+    AppendNumber(i);
+    temporaryOperand = "";
+  });
+}
+
+decimalButton.addEventListener("click", () => {
+  AppendNumber(".");
+});
