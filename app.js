@@ -67,13 +67,16 @@ additionButton.addEventListener("click", () => {
 })
 
 subtractionButton.addEventListener("click", () => {
-  console.log(subtractionButton)
+  ChooseOperation ("-");
 })
 divisionButton.addEventListener("click", () => {
-  console.log(divisionButton)
+  ChooseOperation ("/");
 })
-divisionButton.addEventListener("click", () => {
-  console.log(divisionButton)
+multiplicationButton.addEventListener("click", () => {
+  ChooseOperation ("*");
+})
+equalsButton.addEventListener("click", () => {
+  ChooseOperation ("=");
 })
 
 for (let i = 0; i < numbersArray.length; i++) {
