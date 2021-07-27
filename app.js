@@ -38,6 +38,7 @@ const numbersArray = [
 
 let previousOperand="";
 let currentOperand= "";
+let operation = undefined;
 
 //Functions
 function DisplayNumbers() {
@@ -49,10 +50,31 @@ function AppendNumber(number) {
   console.log(number);
   currentOperand = currentOperand.toString() + number.toString();
   DisplayNumbers()
-
 }
 
+function ChooseOperation(selectedOperation){
+  operation = selectedOperation;
+  previousOperand = currentOperand;
+  currentOperand = "";
+  DisplayNumbers();
+}
+
+
 //Add EventListener to numbers
+
+additionButton.addEventListener("click", () => {
+  ChooseOperation ("+");
+})
+
+subtractionButton.addEventListener("click", () => {
+  console.log(subtractionButton)
+})
+divisionButton.addEventListener("click", () => {
+  console.log(divisionButton)
+})
+divisionButton.addEventListener("click", () => {
+  console.log(divisionButton)
+})
 
 for (let i = 0; i < numbersArray.length; i++) {
   const number = numbersArray[i];
