@@ -42,8 +42,12 @@ let operation = undefined;
 
 //Functions
 function DisplayNumbers() {
-  previousElement.innerHTML = previousOperand;
-  currentElement.innerHTML = currentOperand;
+  if (operation) {
+    previousElement.innerHTML = `${previousOperand}  ${operation}`;
+  } else {
+    previousElement.innerHTML = previousOperand;
+  }
+    currentElement.innerHTML = currentOperand;
 }
 
 function AppendNumber(number) {
@@ -56,6 +60,7 @@ function ChooseOperation(selectedOperation){
   operation = selectedOperation;
   previousOperand = currentOperand;
   currentOperand = "";
+  acButton.innerHTML = "AC";
   DisplayNumbers();
 }
 
@@ -68,12 +73,15 @@ function Compute () {
     case "+":
       computation = previous + current;
       break;
+
       case "-":
       computation = previous - current;
       break;
-      case "/":
+
+      case "÷":
       computation = previous / current;
       break;
+
       case "*":
       computation = previous * current;
       break;
@@ -82,11 +90,47 @@ function Compute () {
       break;
   }
   currentOperand = computation;
+  previousOperand = "";
+  operation = undefined;
+  
   DisplayNumbers()
 }
 
+function AllClear() {
+  if (!previousOperand) {
+    currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+  } else {
+    previousOperand = "";
+    currentOperand = "";
+    operation = undefined;
+    acButton.innerHTML = "C";
+  }
+
+  DisplayNumbers();
+}
+function PlusMinus() {
+  currentOperand = currentOperand * -1;
+  DisplayNumbers();
+}
+
+function Percent() {
+  currentOperand = currentOperand / 100;
+  DisplayNumbers();
+}
 
 //Add EventListener
+
+acButton.addEventListener("click", () => {
+  AllClear();
+})
+
+pmButton.addEventListener("click", () => {
+  PlusMinus();
+})
+
+percentButton.addEventListener("click", () => {
+  Percent();
+})
 
 additionButton.addEventListener("click", () => {
   ChooseOperation ("+");
@@ -96,7 +140,7 @@ subtractionButton.addEventListener("click", () => {
   ChooseOperation ("-");
 })
 divisionButton.addEventListener("click", () => {
-  ChooseOperation ("/");
+  ChooseOperation ("÷");
 })
 multiplicationButton.addEventListener("click", () => {
   ChooseOperation ("*");
@@ -112,3 +156,7 @@ for (let i = 0; i < numbersArray.length; i++) {
     AppendNumber (i)
   });
 }
+
+decimalButton.addEventListener("click", () => {
+  AppendNumber(".");
+});
