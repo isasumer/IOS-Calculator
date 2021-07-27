@@ -36,64 +36,87 @@ const numbersArray = [
   number9,
 ];
 
-let previousOperand="";
-let currentOperand= "";
+let previousOperand = "";
+let currentOperand = "";
 let operation = undefined;
+let temporaryOperand = "";
 
-//Functions
+// Functions
+
 function DisplayNumbers() {
   if (operation) {
-    previousElement.innerHTML = `${previousOperand}  ${operation}`;
+    previousElement.innerHTML = `${previousOperand} ${operation}`;
   } else {
     previousElement.innerHTML = previousOperand;
   }
-    currentElement.innerHTML = currentOperand;
+  currentElement.innerHTML = currentOperand;
 }
 
 function AppendNumber(number) {
-  console.log(number);
-  currentOperand = currentOperand.toString() + number.toString();
-  DisplayNumbers()
-}
+  if (number === "." && currentOperand.includes(".")) return;
+  if (number === 0 && currentOperand === "0") return;
+  if (currentOperand.length > 7) return;
 
-function ChooseOperation(selectedOperation){
-  operation = selectedOperation;
-  previousOperand = currentOperand;
-  currentOperand = "";
-  acButton.innerHTML = "AC";
+  currentOperand = currentOperand.toString() + number.toString();
+
   DisplayNumbers();
 }
 
-function Compute () {
+function ChooseOperation(selectedOperation) {
+  if (temporaryOperand) {
+    previousOperand = temporaryOperand.toString();
+    currentOperand = "";
+    temporaryOperand = "";
+    operation = selectedOperation;
+    DisplayNumbers();
+    return;
+  }
+  
+  operation = selectedOperation;
+  previousOperand = currentOperand;
+  acButton.innerHTML = "AC";
+  currentOperand = "";
+
+  DisplayNumbers();
+}
+
+function Compute() {
   let computation;
   const previous = parseFloat(previousOperand);
   const current = parseFloat(currentOperand);
-  
+
+  if (!operation) return;
+  if (isNaN(previous) || isNaN(current)) return;
+
   switch (operation) {
     case "+":
       computation = previous + current;
       break;
 
-      case "-":
+    case "-":
       computation = previous - current;
       break;
 
-      case "÷":
+    case "÷":
       computation = previous / current;
       break;
 
-      case "*":
+    case "*":
       computation = previous * current;
       break;
-  
+
     default:
       break;
   }
+
+  if (isNaN(computation)) return;
+
   currentOperand = computation;
   previousOperand = "";
   operation = undefined;
-  
-  DisplayNumbers()
+  DisplayNumbers();
+  temporaryOperand = currentOperand;
+  currentOperand = "";
 }
 
 function AllClear() {
@@ -108,6 +131,7 @@ function AllClear() {
 
   DisplayNumbers();
 }
+
 function PlusMinus() {
   currentOperand = currentOperand * -1;
   DisplayNumbers();
@@ -118,42 +142,50 @@ function Percent() {
   DisplayNumbers();
 }
 
-//Add EventListener
+// Add event listener to operator buttons
+
+additionButton.addEventListener("click", () => {
+  ChooseOperation("+");
+});
+
+subtractionButton.addEventListener("click", () => {
+  ChooseOperation("-");
+});
+
+multiplicationButton.addEventListener("click", () => {
+  ChooseOperation("*");
+});
+
+divisionButton.addEventListener("click", () => {
+  ChooseOperation("÷");
+});
+
+equalsButton.addEventListener("click", () => {
+  Compute();
+});
+
+// Add event listener to top buttons
 
 acButton.addEventListener("click", () => {
   AllClear();
-})
+});
 
 pmButton.addEventListener("click", () => {
   PlusMinus();
-})
+});
 
 percentButton.addEventListener("click", () => {
   Percent();
-})
+});
 
-additionButton.addEventListener("click", () => {
-  ChooseOperation ("+");
-})
-
-subtractionButton.addEventListener("click", () => {
-  ChooseOperation ("-");
-})
-divisionButton.addEventListener("click", () => {
-  ChooseOperation ("÷");
-})
-multiplicationButton.addEventListener("click", () => {
-  ChooseOperation ("*");
-})
-equalsButton.addEventListener("click", () => {
-  Compute();
-})
+// Add event listener to number buttons
 
 for (let i = 0; i < numbersArray.length; i++) {
   const number = numbersArray[i];
 
   number.addEventListener("click", () => {
-    AppendNumber (i)
+    AppendNumber(i);
+    temporaryOperand = "";
   });
 }
 
