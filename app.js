@@ -59,8 +59,34 @@ function ChooseOperation(selectedOperation){
   DisplayNumbers();
 }
 
+function Compute () {
+  let computation;
+  const previous = parseFloat(previousOperand);
+  const current = parseFloat(currentOperand);
+  
+  switch (operation) {
+    case "+":
+      computation = previous + current;
+      break;
+      case "-":
+      computation = previous - current;
+      break;
+      case "/":
+      computation = previous / current;
+      break;
+      case "*":
+      computation = previous * current;
+      break;
+  
+    default:
+      break;
+  }
+  currentOperand = computation;
+  DisplayNumbers()
+}
 
-//Add EventListener to numbers
+
+//Add EventListener
 
 additionButton.addEventListener("click", () => {
   ChooseOperation ("+");
@@ -76,7 +102,7 @@ multiplicationButton.addEventListener("click", () => {
   ChooseOperation ("*");
 })
 equalsButton.addEventListener("click", () => {
-  ChooseOperation ("=");
+  Compute();
 })
 
 for (let i = 0; i < numbersArray.length; i++) {
