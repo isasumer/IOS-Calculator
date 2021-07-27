@@ -32,7 +32,6 @@ body {
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
-  border:1px solid red;
 }
 
 .previous-display {
@@ -57,7 +56,7 @@ body {
   height:100px;
   width:100px;
   justify-content: center;
-  transition:filter .3s;
+  transition:filter 2s;
 }
 
 .function {

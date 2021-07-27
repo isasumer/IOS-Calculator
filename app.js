@@ -1,15 +1,16 @@
-const previousElement = document.querySelector(".previous-display");
-const currentElement = document.querySelector(".current-display");
+// // Variables
+// const previousElement = document.querySelector(".previous-display");
+// const currentElement = document.querySelector(".current-display");
 
-const acButton = document.querySelector(".ac");
-const pmButton = document.querySelector(".pm");
-const percentButton = document.querySelector(".percent");
+// const acButton = document.querySelector(".ac");
+// const pmButton = document.querySelector(".pm");
+// const percentButton = document.querySelector(".percent");
 
-const additionButton = document.querySelector(".addition");
-const subtractionButton = document.querySelector(".subtraction");
-const multiplyButton = document.querySelector(".multiplication");
-const divisionButton = document.querySelector(".division");
-const equalButton = document.querySelector(".equals");
+// const additionButton = document.querySelector(".addition");
+// const subtractionButton = document.querySelector(".subtraction");
+// const multiplicationButton = document.querySelector(".multiplication");
+// const divisionButton = document.querySelector(".division");
+// const equalsButton = document.querySelector(".equals");
 
 const decimalButton = document.querySelector(".decimal");
 const number0 = document.querySelector(".number-0");
@@ -35,156 +36,156 @@ const numbersArray = [
   number9,
 ];
 
-let previousOperand = "";
-let currentOperand = "";
-let operation = undefined;
-let temporaryOperand = "";
+// let previousOperand = "";
+// let currentOperand = "";
+// let operation = undefined;
+// let temporaryOperand = "";
 
-function DisplayNumbers() {
-  if (operation) {
-    previousElement.innerHTML = `${previousOperand} ${operation}`;
-  }
-  else{
-    previousElement.innerHTML=previousOperand;
-  }
-  currentElement.innerHTML=currentOperand
-}
+// // Functions
 
-function AppendNumber(number) {
-  if (number==="." && currentOperand.includes(".")) return;
-  if (number === 0 && currentOperand === "0") return;
-  if (currentOperand.length > 7) return;
+// function DisplayNumbers() {
+//   if (operation) {
+//     previousElement.innerHTML = `${previousOperand} ${operation}`;
+//   } else {
+//     previousElement.innerHTML = previousOperand;
+//   }
+//   currentElement.innerHTML = currentOperand;
+// }
 
-  currentOperand = currentOperand.toString() + number.toString();
+// function AppendNumber(number) {
+//   if (number === "." && currentOperand.includes(".")) return;
+//   if (number === 0 && currentOperand === "0") return;
+//   if (currentOperand.length > 7) return;
 
-  DisplayNumbers();
-}
+//   currentOperand = currentOperand.toString() + number.toString();
 
-function ChooseOperation(selectedOperation) {
-  if (temporaryOperand) {
-    previousOperand = temporaryOperand.toString();
-    currentOperand = "";
-    temporaryOperand= "";
-    operation = selectedOperation;
-    DisplayNumbers();
-    return;
-  }
+//   DisplayNumbers();
+// }
 
-  operation = selectedOperation;
-  previousOperand = currentOperand;
-  acButton.innerHTML = "AC";
-  currentOperand ="";
+// function ChooseOperation(selectedOperation) {
+//   if (temporaryOperand) {
+//     previousOperand = temporaryOperand.toString();
+//     currentOperand = "";
+//     temporaryOperand = "";
+//     operation = selectedOperation;
+//     DisplayNumbers();
+//     return;
+//   }
+  
+//   operation = selectedOperation;
+//   previousOperand = currentOperand;
+//   acButton.innerHTML = "AC";
+//   currentOperand = "";
 
-  DisplayNumbers ();
-}
+//   DisplayNumbers();
+// }
 
-function Compute () {
-  let computation;
-  const previous= parseFloat(previousOperand);
-  const current = parseFloat(currentOperand);
+// function Compute() {
+//   let computation;
+//   const previous = parseFloat(previousOperand);
+//   const current = parseFloat(currentOperand);
 
-  if (!operation) return;
-  if (isNaN(previous) || isNaN(current)) return;
+//   if (!operation) return;
+//   if (isNaN(previous) || isNaN(current)) return;
 
-  switch (operation){
-    
-    case "+":
-    computation = previous + current;
-    break;
+//   switch (operation) {
+//     case "+":
+//       computation = previous + current;
+//       break;
 
-    case "-":
-    computation = previous - current;
-    break;
+//     case "-":
+//       computation = previous - current;
+//       break;
 
-    case "/":
-    computation = previous / current;
-    break;
+//     case "÷":
+//       computation = previous / current;
+//       break;
 
-    case "*":
-    computation = previous * current;
-    break;
+//     case "*":
+//       computation = previous * current;
+//       break;
 
-    default:
-      break;
-  }
+//     default:
+//       break;
+//   }
 
-  if (isNaN(computation)) return;
+//   if (isNaN(computation)) return;
 
-  currentOperand = computation;
-  previousOperand = "";
-  operation = undefined;
-  DisplayNumbers();
-  temporaryOperand = currentOperand;
-  currentOperand = "";
-}
+//   currentOperand = computation;
+//   previousOperand = "";
+//   operation = undefined;
+//   DisplayNumbers();
+//   temporaryOperand = currentOperand;
+//   currentOperand = "";
+// }
 
-function Allclear () {
-  if (!previousOperand){
-    currentOperand = currentOperand.slice(0, currentOperand.length - 1);
-  }else {
-    previousOperand = "";
-    currentOperand = "";
-    operation= undefined;
-    acButton.innerHTML = "C";
-  }
-  DisplayNumbers();
-}
+// function AllClear() {
+//   if (!previousOperand) {
+//     currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+//   } else {
+//     previousOperand = "";
+//     currentOperand = "";
+//     operation = undefined;
+//     acButton.innerHTML = "C";
+//   }
 
-function PlusMinus () {
-  currentOperand = currentOperand * -1;
-  DisplayNumbers();
-}
+//   DisplayNumbers();
+// }
 
-function Percent () {
-  currentOperand = currentOperand / 100;
-  DisplayNumbers();
-}
+// function PlusMinus() {
+//   currentOperand = currentOperand * -1;
+//   DisplayNumbers();
+// }
 
-//Add event listener to operator Buttons
+// function Percent() {
+//   currentOperand = currentOperand / 100;
+//   DisplayNumbers();
+// }
 
-additionButton.addEventListener ("click", () => {
-  ChooseOperation ("+");
-});
+// // Add event listener to operator buttons
 
-subtractionButton.addEventListener ("click", () => {
-  ChooseOperation ("-");
-});
+// additionButton.addEventListener("click", () => {
+//   ChooseOperation("+");
+// });
 
-multiplicationButton.addEventListener ("click", () => {
-  ChooseOperation ("*");
-});
+// subtractionButton.addEventListener("click", () => {
+//   ChooseOperation("-");
+// });
 
-divisionButton.addEventListener ("click", () => {
-  ChooseOperation ("/");
-});
+// multiplicationButton.addEventListener("click", () => {
+//   ChooseOperation("*");
+// });
 
-equalButton.addEventListener ("click", () => {
-  Compute ();
-});
+// divisionButton.addEventListener("click", () => {
+//   ChooseOperation("÷");
+// });
 
-acButton.addEventListener ("click", () => {
-  Allclear ();
-});
+// equalsButton.addEventListener("click", () => {
+//   Compute();
+// });
 
-pmButton.addEventListener ("click", () => {
-  PlusMinus ();
-});
+// // Add event listener to top buttons
 
-percentButton.addEventListener ("click", () => {
-  Percent();
-})
+// acButton.addEventListener("click", () => {
+//   AllClear();
+// });
 
-//Add Event Listener to Number Buttons 
+// pmButton.addEventListener("click", () => {
+//   PlusMinus();
+// });
 
-for (let i=0; i<numbersArray.length; i++) {
-  const number = numbersArray [i];
+// percentButton.addEventListener("click", () => {
+//   Percent();
+// });
+
+// // Add event listener to number buttons
+
+for (let i = 0; i < numbersArray.length; i++) {
+  const number = numbersArray[i];
 
   number.addEventListener("click", () => {
     AppendNumber(i);
     temporaryOperand = "";
+ 
   });
 }
-
-decimalButton.addEventListener("click", () => {
-  AppendNumber(".");
-});
